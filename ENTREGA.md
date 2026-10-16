@@ -16,7 +16,7 @@ Clasifica cada fragmento de `espagueti.html`: **M** (Modelo), **V** (Vista), **C
 
 | # | Fragmento | Rol(es) | ¿Por qué? |
 |---|---|---|---|
-| 1 | `var n = document.getElementById('nombre').value.trim();` | | |
+| 1 | `var n = document.getElementById('nombre').value.trim();` | V | Lo clasificamos como Vista porque solo lee lo que el usuario escribio en el formulario. No decide nada con ese dato. |
 | 2 | `if (isNaN(p) \|\| p < 1 \|\| p > 100) { err.textContent = 'El peso debe estar entre 1 y 100.'; return; }` | | |
 | 3 | `if (total + p > 100) { err.textContent = '...'; return; }` | | |
 | 4 | `evals.push({ id: sig++, nombre: n, peso: p, nota: nota });` | | |
