@@ -16,18 +16,18 @@ Clasifica cada fragmento de `espagueti.html`: **M** (Modelo), **V** (Vista), **C
 
 | # | Fragmento | Rol(es) | ¿Por qué? |
 |---|---|---|---|
-| 1 | `var n = document.getElementById('nombre').value.trim();` | V | Lo clasificamos como Vista porque solo lee lo que el usuario escribio en el formulario. No decide nada con ese dato. |
-| 2 | `if (isNaN(p) \|\| p < 1 \|\| p > 100) { err.textContent = 'El peso debe estar entre 1 y 100.'; return; }` | | |
-| 3 | `if (total + p > 100) { err.textContent = '...'; return; }` | | |
-| 4 | `evals.push({ id: sig++, nombre: n, peso: p, nota: nota });` | | |
-| 5 | `localStorage.setItem('notas.v1', JSON.stringify(evals));` | | |
-| 6 | `document.getElementById('nombre').value = '';` | | |
-| 7 | `'<input ... onchange="ponerNota(' + e.id + ', this.value)">'` | | |
-| 8 | `nec = Math.ceil(nec * 100 - 1e-9) / 100;` | | |
-| 9 | `if (acum + 1e-9 >= 3.0) { txt = '¡Aprobado! ...'; cls = 'ok'; }` | | |
-| 10 | `document.getElementById('tabla').innerHTML = filas;` | | |
-| 11 | `function borrar(id) { ...splice...; localStorage.setItem(...); pintar(); }` | | |
-| 12 | `(e.peso * e.nota / 100).toFixed(2)` | | |
+| 1 | `var n = document.getElementById('nombre').value.trim();` |V| Lo clasificamos como Vista porque solo lee lo que el usuario escribio en el formulario. No decide nada con ese dato. |
+| 2 | `if (isNaN(p) \|\| p < 1 \|\| p > 100) { err.textContent = 'El peso debe estar entre 1 y 100.'; return; }` | Mezcla de M y V | La condicion del peso entre 1 y 100 es una regla del negocio, pero en la misma linea se escribe el mensaje en la pantalla con err.textContent. |
+| 3 | `if (total + p > 100) { err.textContent = '...'; return; }` | Mezcla de M y V | Revisar que los pesos no pasen de 100 es una regla, y mostrar el mensaje de error es de pantalla. Van pegadas en el mismo if. |
+| 4 | `evals.push({ id: sig++, nombre: n, peso: p, nota: nota });` | M | Aqui se crea la evaluacion y se le asigna el id, o sea que son datos puros. |
+| 5 | `localStorage.setItem('notas.v1', JSON.stringify(evals));` | M | Guardar en localStorage es persistencia, y eso le toca al Modelo por atraves de un almacen. La Vista no deberia saber donde se guardan los datos. |
+| 6 | `document.getElementById('nombre').value = '';` | V | Solo limpia el campo de la pantalla, no tiene reglas ni datos. |
+| 7 | `'<input ... onchange="ponerNota(' + e.id + ', this.value)">'` | Mezcla de V y C | Dibuja el input en la tabla y a la vez engancha el evento con onchange, que es reaccionar al usuario, todo dentro de un texto armado a mano. |
+| 8 | `nec = Math.ceil(nec * 100 - 1e-9) / 100;` | M | Es el redondeo hacia arriba de la nota necesaria, una regla de calculo que no tiene que ver con la pantalla. |
+| 9 | `if (acum + 1e-9 >= 3.0) { txt = '¡Aprobado! ...'; cls = 'ok'; }` | Mezcla de M y V | Decidir que el estudiante aprobo (acum >= 3.0) es regla del negocio, pero en la misma linea se escoge el texto y la clase CSS que se ven en pantalla. |
+| 10 | `document.getElementById('tabla').innerHTML = filas;` | V | Es meter el HTML armado en la tabla, dibujo puro. |
+| 11 | `function borrar(id) { ...splice...; localStorage.setItem(...); pintar(); }` | Mezcla de M, V y C | La funcion reacciona al clic que es C, borra de la lista y guarda que seria M y vuelve a pintar y limpia el error que es V. Hace las tres cosas en cuatro lineas. |
+| 12 | `(e.peso * e.nota / 100).toFixed(2)` | Mezcla de M y V | El calculo del aporte es peso por nota entre 100, es regla, y el toFixed(2) es solo formato para mostrarlo. Se puede argumentar que es casi todo M, pero como el formato esta pegado, lo clasificamos como mezcla. |
 
 ## 2. Olores del espagueti (Parte 1)
 
