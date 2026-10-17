@@ -64,15 +64,15 @@ sequenceDiagram
     participant A as Almacen (almacen.js)
 
     U->>V: presiona Agregar (evento submit)
-    V->>C: avisa con el manejador de alAgregar
-    C->>V: leerFormulario()
-    V-->>C: nombre, peso y nota como texto
-    C->>M: agregar con los datos ya convertidos a numero
-    M->>M: valida las reglas R1 a R5 y crea la evaluacion
-    M->>A: guardar()
-    M->>V: avisa a los suscriptores
+    V->>V: leerFormulario()
+    V->>C: manejador de alAgregar con nombre, peso y nota como texto
+    C->>C: #ejecutar pasa peso y nota a numero
+    C->>M: agregar({ nombre, peso, nota })
+    M->>M: valida R1 a R5 y crea la evaluacion
+    M->>A: guardar() dentro de #cambio()
+    M->>V: avisa al suscriptor que registro la Vista
     V->>V: render() dibuja la fila nueva
-    C->>V: limpiarFormulario()
+    C->>V: limpiarError() y limpiarFormulario()
     V-->>U: ve la fila nueva en la tabla
 ```
 
@@ -119,7 +119,7 @@ R/ Con el Observer el Modelo no tiene que saber cuantas vistas hay. Asi podemos 
 
 4. Elige un olor de MVC (controlador gordo, lógica en la Vista, Modelo que toca la pantalla, Modelo anémico) que te hubiera sido fácil cometer hoy. ¿Cuál y cómo lo evitaron?
 
-R/ El que mas facil nos pudo pasar era meter logica en la Vista, por ejemplo decidir en render si el estudiante aprobo. Lo evitamos dejando esa decision en resumen() del Modelo, y la Vista solo muestra el estado que le llega. Ademas, las pruebas de arquitectura revisan que la Vista no tenga reglas.
+R/ El que mas facil nos pudo pasar era meter logica en la Vista, por ejemplo decidir en render si el estudiante aprobo. Lo evitamos dejando esa decision en resumen() del Modelo. La Vista solo convierte el estado que le llega en un texto y un color. Ademas, las pruebas de arquitectura revisan que la Vista no tenga reglas.
 
 5. ¿Para qué tipo de aplicación **no** usarías MVC? Justifica con lo que viste en el laboratorio.
 
