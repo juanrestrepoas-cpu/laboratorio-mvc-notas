@@ -1,4 +1,3 @@
-```javascript
 /**
  * CONTROLADOR · Notas del semestre (PARTE 4 de la guía)
  */
@@ -57,4 +56,3 @@ export class NotasControlador {
     }
   }
 }
-```
