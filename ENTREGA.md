@@ -1,6 +1,6 @@
 # Entrega · Laboratorio MVC · Notas del semestre
 
-**Equipo:** ______________________  
+**Equipo:** Santiago Machado, Sergio Perez, Juan Manuel Restrepo   
 **Integrantes:** ______________________  
 **Repositorio:** ______________________
 
@@ -36,19 +36,39 @@ cuando el proyecto crece y en qué pieza de MVC viviría la solución.
 
 | Olor | Consecuencia | Dónde se arregla (M, V o C) |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
-| | | |
+| Variables globales son evals y sig | cualquier funcion las puede cambiar y cuesta saber quien dañó algo | M |
+| La validacion de la nota esta repetida en agregar y en ponerNota | si cambiamos la regla en un lado y se nos olvida el otro, la app queda inconsistente | M |
+| Valores magicos repetidos 3.0, 4.0, 5.0 y la clave notas.v1 | para cambiar la nota minima hay que buscar cada 3.0 y es facil dejar uno viejo | M |
+| HTML armado con texto e innerHTML | lo que escribe el usuario se interpreta como HTML, por eso <b>hola</b> sale en negrita, y es un riesgo de seguridad | V |
+|Funciones que hacen varias cosas agregar valida, guarda, limpia y pinta | son largas, dificiles de leer y un cambio en una parte puede romper otra | C |
 
 ## 3. El flujo de «agregar una evaluación» (Parte 6)
 
 Dibuja (a mano y pega una foto, o con texto/Mermaid) el recorrido completo desde que el usuario presiona
 **Agregar** hasta que ve la fila nueva en la tabla. Marca en cada paso **el archivo y el método** que actúa.
 
-```text
-(tu diagrama aquí)
+```mermaid
+sequenceDiagram
+    actor U as Usuario
+    participant V as Vista (vista.js)
+    participant C as Controlador (controlador.js)
+    participant M as Modelo (modelo.js)
+    participant A as Almacen (almacen.js)
+    participant T as Termometro (termometro-vista.js)
+
+    U->>V: presiona Agregar (evento submit)
+    V->>C: avisa con el manejador de alAgregar
+    C->>V: leerFormulario()
+    V-->>C: nombre, peso y nota como texto
+    C->>M: agregar con los datos ya convertidos a numero
+    M->>M: valida las reglas R1 a R5 y crea la evaluacion
+    M->>A: guardar()
+    M->>V: avisa a los suscriptores
+    M->>T: avisa a los suscriptores
+    V->>V: render() dibuja la fila nueva
+    T->>T: render() mueve la barra
+    C->>V: limpiarFormulario()
+    V-->>U: ve la fila nueva en la tabla
 ```
 
 ## 4. Evidencias (Partes 2, 3, 4 y 6)
