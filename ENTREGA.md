@@ -94,14 +94,19 @@ La idea: **cada cambio debía tocar solo las piezas que le corresponden**.
 
 | Cambio | Archivos que tocaste | ¿Era lo esperado? ¿Por qué? |
 |---|---|---|
-| 5A · Nombres únicos | | |
-| 5B · Segunda vista (termómetro) | | |
-| 5C · Otro almacén | | |
+| 5A · Nombres únicos | solo src/modelo.js | si, es una regla nueva y las reglas viven en el Modelo. La Vista y el Controlador no cambian, y el error igual aparece en pantalla |
+| 5B · Segunda vista (termómetro) | src/termometro-vista.js nuevo y src/main.js | si, es una vista nueva que se suscribe al Modelo y se conecta en main.js. El Modelo no cambia |
+| 5C · Otro almacén | src/almacen.js y src/main.js | si, el Modelo solo pide cargar() y guardar(), asi que cambiar donde se guarda no lo afecta |
 
 ## 6. Reflexión (Parte 6)
 
 1. En la versión espagueti, ¿qué tuviste que leer o tocar para entender dónde se decide si el estudiante aprobó? ¿Y en la versión MVC?
+R/ En el espagueti tuvimos que leer toda la funcion pintar, porque ahi se calcula el acumulado y se decide si aprobo, y todo esta revuelto con el codigo que dibuja la tabla. En la version MVC esa decision queda en resumen() del Modelo, en un solo lugar y sin nada de pantalla.
 2. ¿Por qué el Modelo **no** debe llamar a `alert()` ni a `document`? ¿Qué pasaría con las pruebas del Modelo si lo hiciera?
+R/ Porque el Modelo solo debe tener datos y reglas. Si usara alert() o document, las pruebas no se podrian correr sin navegador, y cualquier cambio en la pantalla nos obligaria a tocar el Modelo.
 3. El Modelo avisa de sus cambios sin saber quién escucha (Observer). ¿Qué ganamos con eso frente a que el Modelo llame directamente a `vista.render()`?
+R/ Con el Observer el Modelo no tiene que saber cuantas vistas hay. Asi podemos agregar el termometro sin cambiar el Modelo. Si llamara directo a vista.render(), quedaria amarrado a esa vista y cada vista nueva lo obligaria a cambiar.
 4. Elige un olor de MVC (controlador gordo, lógica en la Vista, Modelo que toca la pantalla, Modelo anémico) que te hubiera sido fácil cometer hoy. ¿Cuál y cómo lo evitaron?
+R/ 
 5. ¿Para qué tipo de aplicación **no** usarías MVC? Justifica con lo que viste en el laboratorio.
+R/ No lo usariamos en un script pequeño o de una sola vez, porque separar en tres piezas daria mas trabajo que beneficio. Se justifica cuando la app va a crecer, tiene reglas que probar o necesita varias pantallas.
