@@ -114,5 +114,7 @@ R/ Con el Observer el Modelo no tiene que saber cuantas vistas hay. Asi podemos 
 
 4. Elige un olor de MVC (controlador gordo, lógica en la Vista, Modelo que toca la pantalla, Modelo anémico) que te hubiera sido fácil cometer hoy. ¿Cuál y cómo lo evitaron?
 R/ 
+
 5. ¿Para qué tipo de aplicación **no** usarías MVC? Justifica con lo que viste en el laboratorio.
+
 R/ No lo usariamos en un script pequeño o de una sola vez, porque separar en tres piezas daria mas trabajo que beneficio. Se justifica cuando la app va a crecer, tiene reglas que probar o necesita varias pantallas.
